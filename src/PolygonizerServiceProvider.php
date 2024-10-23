@@ -1,12 +1,12 @@
 <?php
 
-namespace Biigle\Modules\Module;
+namespace Biigle\Modules\Polygonizer;
 
 use Biigle\Services\Modules;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
-class ModuleServiceProvider extends ServiceProvider
+class PolygonizerServiceProvider extends ServiceProvider
 {
 
    /**
@@ -18,16 +18,16 @@ class ModuleServiceProvider extends ServiceProvider
    */
     public function boot(Modules $modules, Router $router)
     {
-        $this->loadViewsFrom(__DIR__.'/resources/views', 'module');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'polygonizer');
 
         $router->group([
-            'namespace' => 'Biigle\Modules\Module\Http\Controllers',
+            'namespace' => 'Biigle\Modules\Polygonizer\Http\Controllers',
             'middleware' => 'web',
         ], function ($router) {
             require __DIR__.'/Http/routes.php';
         });
 
-        $modules->register('module', [
+        $modules->register('polygonizer', [
             'viewMixins' => [
                 'dashboardMain',
             ],
@@ -40,7 +40,7 @@ class ModuleServiceProvider extends ServiceProvider
         ]);
 
         $this->publishes([
-            __DIR__.'/public/assets' => public_path('vendor/module'),
+            __DIR__.'/public/assets' => public_path('vendor/polygonizer'),
         ], 'public');
     }
 
